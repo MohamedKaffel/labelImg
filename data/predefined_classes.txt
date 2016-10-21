@@ -1,5 +1,6 @@
-dog
+cni
 person
-cat
-tv
-car
+mrz
+nom
+prenom
+lieu
