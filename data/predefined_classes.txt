@@ -1,6 +1,7 @@
-cni
-person
-mrz
 nom
+nomEpouse
 prenom
 lieu
+mrz
+person
+cni
