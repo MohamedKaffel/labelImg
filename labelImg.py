@@ -154,8 +154,8 @@ class MainWindow(QMainWindow, WindowMixin):
         changeSavedir = action('&Change default saved Annotation dir', self.changeSavedir,
                 'Ctrl+r', 'open', u'Change default saved Annotation dir')
 
-        openAnnotation = action('&Open Annotation', self.openAnnotation,
-                'Ctrl+q', 'openAnnotation', u'Open Annotation')
+        openAnnotation = action('&Open Custom Annotation', self.openAnnotation,
+                'Ctrl+k', 'openAnnotation', u'Open Annotation')
 
         openNextImg = action('&Next Image', self.openNextImg,
                 'n', 'next', u'Open Next')
@@ -847,12 +847,13 @@ class MainWindow(QMainWindow, WindowMixin):
         path = os.path.dirname(unicode(self.filename))\
                 if self.filename else '.'
         if self.usingPascalVocFormat:
-            formats = ['*.%s' % unicode(fmt).lower()\
-                    for fmt in QImageReader.supportedImageFormats()]
-            filters = "Open Annotation XML file (%s)" % \
-                    ' '.join(formats + ['*.xml'])
-            filename = unicode(QFileDialog.getOpenFileName(self,
-                '%s - Choose a xml file' % __appname__, path, filters))
+            # formats = ['*.%s' % unicode(fmt).lower()\
+            #         for fmt in QImageReader.supportedImageFormats()]
+            # filters = "Open Annotation XML file (%s)" % \
+            #         ' '.join(formats + ['*.xml'])
+            # filename = unicode(QFileDialog.getOpenFileName(self,
+            #     '%s - Choose a xml file' % __appname__, path, filters))
+            filename = self.filename[:-4] + '.xml'
             self.loadPascalXMLByFilename(filename)
 
     def openDir(self, _value=False):
@@ -942,8 +943,11 @@ class MainWindow(QMainWindow, WindowMixin):
                 savedPath = os.path.join(str(self.defaultSaveDir), savedFileName)
                 self._saveFile(savedPath)
             else:
-                self._saveFile(self.filename if self.labelFile\
-                                         else self.saveFileDialog())
+                print 'entering else case...'
+                # if self.labelFile else self.saveFileDialog()
+                filename = self.filename[:-4] + '.xml'
+                print filename
+                self._saveFile(filename)
 
     def saveFileAs(self, _value=False):
         assert not self.image.isNull(), "cannot save empty image"
